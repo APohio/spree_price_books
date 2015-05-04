@@ -14,9 +14,9 @@ Spree::Price.class_eval do
 
   delegate :product, to: :variant
 
-  scope :by_currency, -> (currency_iso) { where(currency: currency_iso) }
-  scope :by_role, -> (role_ids) { prioritized.where(spree_price_books: { role_id: role_ids }) }
-  scope :by_store, -> (store_id) { joins(:store_price_books).where(spree_store_price_books: { store_id: store_id }) }
+  scope :by_currency, ->(currency_iso) { where(currency: currency_iso) }
+  scope :by_role, ->(role_ids) { prioritized.where(spree_price_books: { role_id: role_ids }) }
+  scope :by_store, ->(store_id) { joins(:store_price_books).where(spree_store_price_books: { store_id: store_id }) }
   scope :list, -> { prioritized.where(spree_price_books: { discount: false }) }
   scope :prioritized, -> { includes(:price_book).order('spree_price_books.priority DESC, spree_prices.amount ASC') }
 
